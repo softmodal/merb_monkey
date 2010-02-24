@@ -104,6 +104,7 @@ module MonkeyModel
   
   def init_relationship_defaults
     self.relationships.each do |name, relationship|
+      next unless relationship.class == DataMapper::Associations::ManyToOne::Relationship
       getter = setter = "__#{relationship.name}__"
       model_class = relationship.parent_key.map { |prop| prop.model }.first
       property = relationship.child_key.first

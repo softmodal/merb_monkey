@@ -1,8 +1,6 @@
 class MerbMonkey::Main < MerbMonkey::Application
   provides :json
 
-  UNAUTHORIZED = { :error => "You are not authorized for this action" }.to_json  
-
   def index
     render
   end

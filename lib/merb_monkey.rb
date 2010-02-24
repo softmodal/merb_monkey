@@ -165,6 +165,7 @@ if defined?(Merb::Plugins)
       klass.all(parms.merge(:limit => params[:limit].to_i, :offset => params[:offset].to_i)).each do |obj|
         h = {}
         klass.properties.each do |property|
+p property.getter
           h[property.name] = obj.send(property.getter)
         end
         arr.push(h)

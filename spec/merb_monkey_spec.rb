@@ -242,6 +242,13 @@ describe "DataMapper::Model" do
       end
 
     end
+    
+    it "should only work on ManyToOne relationships" do
+      class Author; has n, :books; end;
+      Book.send(:init_relationship_defaults)
+      Author.send(:init_relationship_defaults)
+      Book.properties[:author_id].getter.should == "__author__"
+    end
   
   end
 
