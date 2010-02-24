@@ -1,0 +1,19 @@
+<head>
+<link href="<%= public_path_for :stylesheet, 'master.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" />
+
+<script src="<%= public_path_for :javascript, 'jquery.js' %>" type="text/javascript" charset="utf-8"></script>
+<script src="<%= public_path_for :javascript, 'jquery.hotkeys-0.7.9.min.js' %>" type="text/javascript" charset="utf-8"></script>
+<script src="<%= public_path_for :javascript, 'monkey.js' %>" type="text/javascript" charset="utf-8"></script>
+<script src="<%= public_path_for :javascript, 'ajaxupload.js' %>" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $("#monkey").monkey({
+      prefix: "<%= Merb::Slices::config[:merb_monkey][:path_prefix] %>"
+    });
+    setTimeout("$('#_msg').slideUp()", 3000);
+  });
+</script>
+</head>
+<div id="_msg" style="color:red;margin-left:10px;"><%=h message %></div>
+<div id="monkey"></div>

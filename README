@@ -1,0 +1,76 @@
+MerbMonkey
+==========
+
+A slice for the Merb framework.
+
+------------------------------------------------------------------------------
+   
+
+To see all available tasks for MerbMonkey run:
+
+rake -T slices:merb_monkey
+
+------------------------------------------------------------------------------
+
+Instructions for installation:
+
+file: config/init.rb
+
+# add the slice as a regular dependency
+
+dependency 'merb_monkey'
+
+# if needed, configure which slices to load and in which order
+
+Merb::Plugins.config[:merb_slices] = { :queue => ["MerbMonkey", ...] }
+
+# optionally configure the plugins in a before_app_loads callback
+
+Merb::BootLoader.before_app_loads do
+  
+  Merb::Slices::config[:merb_monkey][:option] = value
+  
+end
+
+file: config/router.rb
+
+# example: /merb_monkey/:controller/:action/:id
+
+add_slice(:MerbMonkey)
+
+# example: /:lang/:controller/:action/:id
+
+add_slice(:MerbMonkey, :path => ':lang')
+
+# example: /:controller/:action/:id
+
+slice(:MerbMonkey)
+
+Normally you should also run the following rake task:
+
+rake slices:merb_monkey:install
+
+------------------------------------------------------------------------------
+
+You can put your application-level overrides in:
+
+host-app/slices/merb_monkey/app - controllers, models, views ...
+
+Templates are located in this order:
+
+1. host-app/slices/merb_monkey/app/views/*
+2. gems/merb_monkey/app/views/*
+3. host-app/app/views/*
+
+You can use the host application's layout by configuring the
+merb_monkey slice in a before_app_loads block:
+
+Merb::Slices.config[:merb_monkey] = { :layout => :application }
+
+By default :merb_monkey is used. If you need to override
+stylesheets or javascripts, just specify your own files in your layout
+instead/in addition to the ones supplied (if any) in 
+host-app/public/slices/merb_monkey.
+
+In any case don't edit those files directly as they may be clobbered any time
+rake merb_monkey:install is run.
