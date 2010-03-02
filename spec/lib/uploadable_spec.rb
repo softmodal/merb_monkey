@@ -34,13 +34,13 @@ describe Uploadable do
     DataMapper.auto_migrate!
     Publisher.create(:name => "Random House")
     Author.create(:name => "Tom Clancy", :publisher_id => 1)
-    Author.create(:name => "Patrick O'Brien", :publisher_id => 1)
+    Author.create(:name => "Patrick O'Brian", :publisher_id => 1)
     Book.create(:title => "The Hunt for Red October", :royalty => 100000, :author_id => 1)
     Book.create(:title => "Master and Commander", :royalty => 50000, :author_id => 2)
 
     @data = [
       {:title => "Rising Sun", :royalty => 1000000, :__author__ => "Tom Clancy"},
-      {:title => "Post Captain", :royalty => 75000, :__author__ => "Patrick O'Brien"}
+      {:title => "Post Captain", :royalty => 75000, :__author__ => "Patrick O'Brian"}
     ]
       
     @tmp_path = Merb.root + "/tmp/books"
@@ -180,7 +180,7 @@ describe Uploadable do
         property :id, Serial
         property :name, String
       end
-      @authors = [{:name => "Michael Dibdin"}, {:name => "Patrick O'Brien"}, {:name => "Michael Connelly"}]
+      @authors = [{:name => "Michael Dibdin"}, {:name => "Patrick O'Brian"}, {:name => "Michael Connelly"}]
     end
     it "should raise an error if the first item in data array has a header that the class doesn't respond_to" do
       @authors[0][:country] = "Irish"
@@ -220,8 +220,8 @@ describe Uploadable do
       end
       @data = Book.cache([
         { "__author__" => "Tom Clancy", "royalty" => 75000, "title" => "Rising Sun" },
-        { "__author__" => "Patrick O'Brien", "royalty" => 50000, "title" => "Post Captain" },
-        { "__author__" => "Patrick O'Brien", "royalty" => 50000, "title" => "Post Captain" }
+        { "__author__" => "Patrick O'Brian", "royalty" => 50000, "title" => "Post Captain" },
+        { "__author__" => "Patrick O'Brian", "royalty" => 50000, "title" => "Post Captain" }
       ])
     end
     

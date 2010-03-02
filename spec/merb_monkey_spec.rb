@@ -837,6 +837,10 @@ describe "MerbMonkey (module)" do
       MerbMonkey.enrich("alive" => "True").should == { "alive" => true }
       MerbMonkey.enrich("alive" => "false").should == { "alive" => false }
     end
+    
+    it "should not add a wildcard to the end of dates" do
+      MerbMonkey.enrich("published" => "2009-01-01").should == { "published" => "2009-01-01" }
+    end
           
   end
   

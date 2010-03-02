@@ -32,7 +32,7 @@ if defined?(Merb::Plugins)
     
     # Slice metadata
     self.description = "MerbMonkey is a jQuery-powered admin slice for DataMapper"
-    self.version = "0.0.6"
+    self.version = "0.0.7"
     self.author = "Jon Sarley"
         
     # Stub classes loaded hook - runs before LoadClasses BootLoader
@@ -101,12 +101,14 @@ if defined?(Merb::Plugins)
         end
         oper = value.slice!(MerbMonkey::Constants::RE_OPERATORS).to_s.strip
         if oper == ""
-          key = if key.include? "."
-            key + ".like"
-          else
-            key.intern.send(:like)
+          unless value.match(MerbMonkey::Constants::RE_DATE)
+            key = if key.include? "."
+              key + ".like"
+            else
+              key.intern.send(:like)
+            end
+            value += "%"
           end
-          value += "%"# unless value.match(MerbMonkey::Constants::RE_DIGITS)
         else
           oper = MerbMonkey::Constants::OPERATORS[MerbMonkey::Constants::PASSED.index(oper)]
           key = if key.include? "."
@@ -165,7 +167,6 @@ if defined?(Merb::Plugins)
       klass.all(parms.merge(:limit => params[:limit].to_i, :offset => params[:offset].to_i)).each do |obj|
         h = {}
         klass.properties.each do |property|
-p property.getter
           h[property.name] = obj.send(property.getter)
         end
         arr.push(h)

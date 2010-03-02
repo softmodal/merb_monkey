@@ -96,13 +96,13 @@ Merb::BootLoader.after_app_loads do
   DataMapper.auto_migrate!
   Publisher.create(:name => "Random House")
   clancy = Author.create(:name => "Tom Clancy", :alive => true, :publisher_id => 1)
-  obrien = Author.create(:name => "Patrick O'Brien", :alive => false)
+  obrian = Author.create(:name => "Patrick O'Brian", :alive => false)
   999.times do |i|
     Author.create(:name => rand * 100990)
   end
   clancy.books.create(:title => "The Hunt for Red October", :published => "1986-04-01", :royalty => 10000)
-  obrien.books.create(:title => "Post Captain", :published => "1963-10-14", :royalty => 15000)
-  obrien.books.create(:title => "The Ionian Mission", :published => "1973-02-14", :royalty => 25000)
+  obrian.books.create(:title => "Post Captain", :published => "1963-10-14", :royalty => 15000)
+  obrian.books.create(:title => "The Ionian Mission", :published => "1973-02-14", :royalty => 25000)
   
   # Activate SSL Support
   dependency 'tlsmail'
