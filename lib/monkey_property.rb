@@ -1,6 +1,6 @@
 module MonkeyProperty
   attr_writer :hide, :hide_in_index, :readonly, :header, :getter, :setter, :finder
-  attr_accessor :type
+  attr_accessor :type, :autocomplete
   
   def hide
     return @hide unless @hide.nil?
@@ -15,6 +15,10 @@ module MonkeyProperty
   def readonly
     return @readonly unless @readonly.nil?
     self.serial? ? true : false
+  end
+  
+  def autocomplete
+    @autocomplete || header
   end
   
   def header
@@ -53,6 +57,7 @@ module MonkeyProperty
       :hide_in_index => hide_in_index,
       :required => required,
       :readonly => readonly,
+      :autocomplete => autocomplete,
       :header => header,
       :finder => find,
       :setter => setter,

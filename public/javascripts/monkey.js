@@ -28,7 +28,7 @@ var monkey = {
       } else if (type == "serial") {
         str = "<input type='hidden' id='" + id + "' name='" + name + "' />";
       } else if (type == "relationship") {
-        str = "<input type='text' id='" + id + "' name='" + name + "' class='autocomplete' list='monkey.autocomplete." + property.header + "' tabIndex='1'>";
+        str = "<input type='text' id='" + id + "' name='" + name + "' class='autocomplete' list='monkey.autocomplete." + property.autocomplete + "' tabIndex='1'>";
       } else {
         str = "<input type='text' name='" + name + "' id='" + id + "'" + readonly + " tabIndex='1' autocomplete='off'>";
       };
@@ -556,7 +556,7 @@ $.fn.monkey = function(opts) {
               filter_row += "<div class='td " + property_name + "'>";
               filter_row += "<input type='text' name='obj[" + property.finder + "]' autocomplete='off'></div>";
             };
-            if (!property.hide && property.type == "relationship") relationships[property.header] = 1;
+            if (!property.hide && property.type == "relationship") relationships[property.autocomplete] = 1;
           });
           filter_row += "<input type='submit' style='display:none;'>";
           $(".thead .tr:first", $table).html(header_row);
@@ -581,7 +581,7 @@ $.fn.monkey = function(opts) {
               cache: false,
               dataType: "json",
               url: prefix + "/autocomplete",
-              data: "&models=" + rel,
+              data: "models=" + rel,
               success: function(models) {
                 monkey.autocomplete = models;
               }

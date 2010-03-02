@@ -137,8 +137,9 @@ module MonkeyModel
       }) }
       
       # Change the parameters for this property since it's a relationship
-      property.header = name.camel_case
       property.type = :relationship
+      property.autocomplete = relationship.parent_model
+      property.header = name.camel_case
       property.getter = getter
       property.setter = setter
       property.finder = lambda { "#{model_class.name.snake_case}.#{model_class.send(:identified_by)}" }
