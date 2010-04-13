@@ -77,12 +77,12 @@ module MonkeyModel
     blk.call(self, self.properties) if blk
   end
 
-  def init_for_controller
-    return nil unless authorized_for_read
+  def init_for_controller(controller)
+    return nil unless authorized_for_read(controller)
     h = {
-      :authorized_for_create => authorized_for_create(nil),
-      :authorized_for_update => authorized_for_update(nil),
-      :authorized_for_delete => authorized_for_delete(nil),
+      :authorized_for_create => authorized_for_create(controller),
+      :authorized_for_update => authorized_for_update(controller),
+      :authorized_for_delete => authorized_for_delete(controller),
       :label => {
         :singular => label_singular,
         :plural => label_plural

@@ -323,12 +323,12 @@ describe "DataMapper::Model" do
   describe "init_for_controller" do
 
     before(:all) do
-      @hash = Author.init_for_controller
+      @hash = Author.init_for_controller(@controller)
     end
     
     it "should return nil if the model is not authorized for read" do
       Author.authorized_for_read = false
-      Author.init_for_controller.should == nil
+      Author.init_for_controller(@controller).should == nil
       Author.authorized_for_read = true
     end
     
@@ -365,7 +365,7 @@ describe "DataMapper::Model" do
     end
     
     it "should include the initialization for each of its properties" do
-      @hash = Author.init_for_controller
+      @hash = Author.init_for_controller(@controller)
       Author.properties.each do |property|
         @hash[:properties][property.name].should == property.init_for_controller
       end
@@ -899,6 +899,10 @@ describe "MerbMonkey (module)" do
           MerbMonkey.check(lambda { false }).should == false
         end
         
+        it "should return false if there is an error" do
+          MerbMonkey.check(lambda { raise StandardError }).should == false
+        end
+        
       end
       
       it "should return true if the result exists" do
@@ -1147,7 +1151,7 @@ describe "MerbMonkey (module)" do
     it "should return the hash of init_for_controller called on each model" do
       h = MerbMonkey.init_for_controller(@controller)
       h.keys.sort[0].should == "Author"
-      h["Author"].should == Author.init_for_controller
+      h["Author"].should == Author.init_for_controller(@controller)
     end
 
     it "should not include a model whose authorized_for_read is false" do

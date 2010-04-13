@@ -32,7 +32,7 @@ if defined?(Merb::Plugins)
     
     # Slice metadata
     self.description = "MerbMonkey is a jQuery-powered admin slice for DataMapper"
-    self.version = "0.0.7"
+    self.version = "0.0.8"
     self.author = "Jon Sarley"
         
     # Stub classes loaded hook - runs before LoadClasses BootLoader
@@ -128,6 +128,13 @@ if defined?(Merb::Plugins)
       def check(var, controller=nil)
         return true if var.nil?
         var.respond_to?(:call) ? var.call(controller) : var
+      rescue => e
+        p "Monkey authorization method caused an error, so we're ignoring it."
+        p "++++++++++++++++"
+        p e.message
+        e.backtrace.each { |l| p l }
+        p "++++++++++++++++"
+        false
       end
       
     end
@@ -148,7 +155,7 @@ if defined?(Merb::Plugins)
           next unless models.downcase.split(/,\s*/).include?(key.downcase)
         end
         klass = MerbMonkey.const_get(key)
-        m = klass.init_for_controller
+        m = klass.init_for_controller(controller)
         h[key] = m if m
       end
       h

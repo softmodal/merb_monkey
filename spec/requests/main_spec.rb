@@ -23,7 +23,6 @@ describe  "/merb_monkey/" do
     
     before(:each) do
       @response = request("/merb_monkey/init")
-      p @response
     end
     
     it "should be successful" do
@@ -58,7 +57,7 @@ describe  "/merb_monkey/" do
       
       it "if empty, it should return all models specified in MerbMonkey.models" do
         json = @response.body.parse_json
-        json.size.should == 4
+        json.size.should == 3
         json["Author"].should_not be_nil
         json["Book"].should_not be_nil
         json["Publisher"].should_not be_nil
@@ -300,36 +299,6 @@ describe  "/merb_monkey/" do
         model_name, model_class = @instance.send(:model_name_and_class)
         model_name.should == "Author"
         model_class.should == Author
-      end
-
-    end
-
-    describe "authorized_for" do
-
-      before(:all) do
-        Author.monkey do |c|
-          c[:create] = true
-          c[:read] = lambda { true }
-          c[:update] = Proc.new { true }
-          c[:delete] = lambda { |controller| controller.params[:model] == "Author" }
-        end
-        Book.monkey do |c|
-          c[:create] = false
-          c[:read] = lambda { false }
-          c[:update] = Proc.new { false }
-          c[:delete] = lambda { |controller| controller.params[:model] == "Book" }
-        end
-      end
-
-      it "should test whether the request satisifies the criteria for authorization to one of the CRUD operations" do
-        @instance.send(:authorized_for, :create, "Author").should == true
-        @instance.send(:authorized_for, :read, "Author").should == true
-        @instance.send(:authorized_for, :update, "Author").should == true
-        @instance.send(:authorized_for, :delete, "Author").should == true
-        @instance.send(:authorized_for, :create, "Book").should == false
-        @instance.send(:authorized_for, :read, "Book").should == false
-        @instance.send(:authorized_for, :update, "Book").should == false
-        @instance.send(:authorized_for, :delete, "Book").should == false
       end
 
     end
