@@ -299,7 +299,7 @@ if defined?(Merb::Plugins)
       parms.merge(:limit => 10000)
 
       arr = klass.all(parms).to_array_of_hashes
-      order = klass.order.map { |property_name| klass.properties[property_name].getter } & arr.first.keys
+      order = klass.order.map { |property_name| klass.properties[property_name].setter } & arr.first.keys
       file = ExcelLoader::array_to_file(arr, order, Merb.root + "/tmp/" + klass.name + ".xls")
       count = klass.count(parms)
       

@@ -73,7 +73,7 @@ Merb::BootLoader.after_app_loads do
       #klass.order = [:id, :title, :author_id, :published, :royalty, :notes]
       props[:published].hide = true
     end
-
+    
   end
   
   class Author
