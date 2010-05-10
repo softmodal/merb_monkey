@@ -32,7 +32,7 @@ if defined?(Merb::Plugins)
     
     # Slice metadata
     self.description = "MerbMonkey is a jQuery-powered admin slice for DataMapper"
-    self.version = "0.0.8"
+    self.version = "0.0.9"
     self.author = "Jon Sarley"
         
     # Stub classes loaded hook - runs before LoadClasses BootLoader
@@ -307,7 +307,7 @@ if defined?(Merb::Plugins)
         controller.run_later do
           begin          
             email = Merb::Mailer.new(
-              :to => MerbMonkey.to_email,
+              :to => MerbMonkey.to_email(controller),
               :from => MerbMonkey.from_email,
               :subject => "Download",
               :text => "Here's your download"
