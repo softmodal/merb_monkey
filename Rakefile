@@ -9,7 +9,7 @@ AUTHOR = "Jon Sarley"
 EMAIL = "jsarley@softmodal.com"
 HOMEPAGE = "http://softmodal.com/"
 SUMMARY = "MerbMonkey is a jQuery-powered admin slice for DataMapper"
-GEM_VERSION = "0.0.9"
+GEM_VERSION = "0.1.0"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'merb'

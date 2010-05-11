@@ -269,7 +269,7 @@ if defined?(Merb::Plugins)
 
           email_settings = {
             :to => MerbMonkey.to_email(controller),
-            :from => MerbMonkey.from_email,
+            :from => MerbMonkey.from_email(controller),
             :subject => 'There were no errors in your upload'
           }
           errors = klass.upload(path)
@@ -308,7 +308,7 @@ if defined?(Merb::Plugins)
           begin          
             email = Merb::Mailer.new(
               :to => MerbMonkey.to_email(controller),
-              :from => MerbMonkey.from_email,
+              :from => MerbMonkey.from_email(controller),
               :subject => "Download",
               :text => "Here's your download"
             )
@@ -329,7 +329,7 @@ if defined?(Merb::Plugins)
     end
     
     def self.from_email(controller=nil)
-      self[:from_email]
+      self[:from_email].respond_to?(:call) ? self[:from_email].call(controller) : self[:from_email]
     end
     
     private
