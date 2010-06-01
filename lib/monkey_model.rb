@@ -1,6 +1,7 @@
 module MonkeyModel
-  attr_writer :order, :label_singular, :label_plural, :identified_by, 
+  attr_writer :order, :label_singular, :label_plural, :identified_by,
     :authorized_for_create, :authorized_for_read, :authorized_for_update, :authorized_for_delete
+  attr_accessor :send_user_when_listing
   
   def authorized_for_create(controller=nil)
     auth = @authorized_for_create

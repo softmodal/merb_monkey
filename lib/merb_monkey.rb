@@ -5,7 +5,7 @@ if defined?(Merb::Plugins)
   dependency 'merb-slices', :immediate => true
   dependency 'merb-assets', :immediate => false
   dependency 'merb-mailer', :immediate => false
-  dependency 'dm-aggregates', :immediate => false
+  #dependency 'dm-aggregates', :immediate => false
   dependency 'excel_loader', :immediate => false
   require 'uploadable.rb'
   require 'monkey_model.rb'
@@ -168,6 +168,8 @@ if defined?(Merb::Plugins)
 
       parms = MerbMonkey.enrich(params[:obj])
       parms.merge!(:unique => false) unless parms == {}
+      #Send the user in the params if set to true
+      parms.merge!(:user => controller.session.user) if klass.send_user_when_listing
 
       count = params[:count] == "false" ? nil : klass.count(parms)
       arr = []
