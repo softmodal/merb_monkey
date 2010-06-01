@@ -169,7 +169,9 @@ if defined?(Merb::Plugins)
       parms = MerbMonkey.enrich(params[:obj])
       parms.merge!(:unique => false) unless parms == {}
       #Send the user in the params if set to true
-      parms.merge!(:user => controller.session.user) if klass.send_user_when_listing
+      if klass.send_user_when_listing && controller && controller.session && controller.session.user
+        parms.merge!(:user_id => controller.session.user.attribute_get(:id))
+      end
 
       count = params[:count] == "false" ? nil : klass.count(parms)
       arr = []
