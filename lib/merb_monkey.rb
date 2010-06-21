@@ -299,13 +299,12 @@ if defined?(Merb::Plugins)
       klass = MerbMonkey.const_get(controller.params[:model])
       raise Exceptions::Unauthorized unless klass.authorized_for_read(controller)
       
+      parms = MerbMonkey.enrich(params[:obj])
+      parms.merge(:limit => 10000)
       #Send the user in the params if set to true
       if klass.send_user_when_listing && controller && controller.session && controller.session.user
         parms.merge!(:user_id => controller.session.user.attribute_get(:id))
       end
-      
-      parms = MerbMonkey.enrich(params[:obj])
-      parms.merge(:limit => 10000)
 
       arr = klass.all(parms).to_array_of_hashes
       order = klass.order.map { |property_name| klass.properties[property_name].setter } & arr.first.keys
