@@ -645,6 +645,7 @@ $.fn.monkey = function(opts) {
       $(document).bind("keydown", "ctrl+shift+right", function() { $("#next").click(); return false });
       $(document).bind("keydown", "ctrl+shift+left", function() { $("#previous").click(); return false });
       $(document).bind("keydown", "ctrl+shift+m", function() { $select.focus(); return false });
+      $(document).bind("keydown", "esc", function() { $("#cancel", $form).trigger("click"); return false });
     };
   
   });

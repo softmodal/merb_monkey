@@ -5,7 +5,7 @@ if defined?(Merb::Plugins)
   dependency 'merb-slices', :immediate => true
   dependency 'merb-assets', :immediate => false
   dependency 'merb-mailer', :immediate => false
-  #dependency 'dm-aggregates', :immediate => false
+  dependency 'dm-aggregates', :immediate => false
   dependency 'excel_loader', :immediate => false
   require 'uploadable.rb'
   require 'monkey_model.rb'
@@ -294,10 +294,15 @@ if defined?(Merb::Plugins)
       { :message => "You will receive an email with the results of your upload shortly." }
     end
     
-    def self.excel(controller)
+    def self.excel(controller)      
       params = controller.params
       klass = MerbMonkey.const_get(controller.params[:model])
       raise Exceptions::Unauthorized unless klass.authorized_for_read(controller)
+      
+      #Send the user in the params if set to true
+      if klass.send_user_when_listing && controller && controller.session && controller.session.user
+        parms.merge!(:user_id => controller.session.user.attribute_get(:id))
+      end
       
       parms = MerbMonkey.enrich(params[:obj])
       parms.merge(:limit => 10000)
