@@ -28,7 +28,7 @@ var monkey = {
       } else if (type == "serial") {
         str = "<input type='hidden' id='" + id + "' name='" + name + "' />";
       } else if (type == "relationship") {
-        str = "<input type='text' id='" + id + "' name='" + name + "' class='autocomplete' list='monkey.autocomplete." + property.autocomplete + "' tabIndex='1'>";
+        str = "<input type='text' id='" + id + "' name='" + name + "' " + readonly + " class='autocomplete' list='monkey.autocomplete." + property.autocomplete + "' tabIndex='1'>";
       } else {
         str = "<input type='text' name='" + name + "' id='" + id + "'" + readonly + " tabIndex='1' autocomplete='off'>";
       };
