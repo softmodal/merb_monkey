@@ -28,7 +28,7 @@ var monkey = {
       } else if (type == "serial") {
         str = "<input type='hidden' id='" + id + "' name='" + name + "' />";
       } else if (type == "relationship") {
-        str = "<input type='text' id='" + id + "' name='" + name + "' " + readonly + " class='autocomplete' list='monkey.autocomplete." + property.autocomplete + "' tabIndex='1'>";
+        str = "<input type='text' id='" + id + "' name='" + name + "' " + readonly + " class='autocomplete' data_list='monkey.autocomplete." + property.autocomplete + "' tabIndex='1'>";
       } else {
         str = "<input type='text' name='" + name + "' id='" + id + "'" + readonly + " tabIndex='1' autocomplete='off'>";
       };
@@ -127,7 +127,26 @@ $.fn.autocomplete = function(options) {
           if (match(self.val(), self.list[i])) {
             var even = "";
             if (i % 2 == 0) even = " class='ac_even'";
-            str += "<"+tag_type+even+">" + self.list[i] + "</"+tag_type+">";
+            //str += "<"+tag_type+even+">" + self.list[i] + "</"+tag_type+">";
+                        // ADDED THIS TO HIGHLIGHT
+                        // ADDED THIS TO HIGHLIGHT
+                        // ADDED THIS TO HIGHLIGHT
+                        var _m = "";
+                        var _r = "";
+                        var _val = self.val();
+                        var j = 0;
+                        for (x=0; x<_val.length; x++) {
+                          _m += "(" + _val[x] + ")([^" + _val[x+1] + "]*)";
+                          j++;
+                          _r += "<b>$" + j;
+                          j++;
+                          _r += "</b>$" + j;
+                        };
+                        var re = new RegExp(_m, "i");
+                        str += "<"+tag_type+even+">" + self.list[i].replace(re, _r) + "</"+tag_type+">";
+                        // ADDED THIS TO HIGHLIGHT
+                        // ADDED THIS TO HIGHLIGHT
+                        // ADDED THIS TO HIGHLIGHT
           };
         };
         if (str) {
@@ -163,14 +182,21 @@ $.fn.autocomplete = function(options) {
         //return true if no suggestion so that we can submit the form
         if (!suggestion_box.is(":visible")) return true;
         var txt = selected_entry.html();
-        if (txt) self.val(txt);
+        //if (txt) self.val(txt);
+                    // ADDED THIS TO HIGHLIGHT
+                    // ADDED THIS TO HIGHLIGHT
+                    // ADDED THIS TO HIGHLIGHT
+                    if (txt) self.val(txt.replace(/\<\/?b\>/g, ""));
+                    // ADDED THIS TO HIGHLIGHT
+                    // ADDED THIS TO HIGHLIGHT
+                    // ADDED THIS TO HIGHLIGHT
         clear_suggestion_box();
         if (k == 13) return false; //for safari
       };
     }).blur(function(e) {
       clear_suggestion_box();
     }).focus(function(e) {
-      self.list = eval(self.attr("list"));
+      self.list = eval(self.attr("data_list"));
       ac_current_input = self;
     });
     //self.focus();
@@ -644,6 +670,8 @@ $.fn.monkey = function(opts) {
       $(document).bind("keydown", "ctrl+shift+up", function() { $(".tr.selected", $tbody).prev().trigger("select"); return false });
       $(document).bind("keydown", "ctrl+shift+right", function() { $("#next").click(); return false });
       $(document).bind("keydown", "ctrl+shift+left", function() { $("#previous").click(); return false });
+      $(document).bind("keydown", "ctrl+shift+f", function() { $("#first").click(); return false });
+      $(document).bind("keydown", "ctrl+shift+l", function() { $("#last").click(); return false });
       $(document).bind("keydown", "ctrl+shift+m", function() { $select.focus(); return false });
       $(document).bind("keydown", "esc", function() { $("#cancel", $form).trigger("click"); return false });
     };
