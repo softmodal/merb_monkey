@@ -5,23 +5,22 @@ Gem::Specification.new do |s|
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Jon Sarley"]
-  s.date = %q{2011-07-05}
+  s.authors = [%q{Jon Sarley}]
+  s.date = %q{2011-07-06}
   s.description = %q{MerbMonkey is a jQuery-powered admin slice for DataMapper}
   s.email = %q{jsarley@softmodal.com}
-  s.extra_rdoc_files = ["README", "LICENSE", "TODO"]
-  s.files = ["LICENSE", "README", "Rakefile", "TODO", "lib/constants.rb", "lib/merb_monkey", "lib/merb_monkey/merbtasks.rb", "lib/merb_monkey/slicetasks.rb", "lib/merb_monkey/spectasks.rb", "lib/merb_monkey.rb", "lib/monkey_collection.rb", "lib/monkey_model.rb", "lib/monkey_property.rb", "lib/uploadable.rb", "spec/lib", "spec/lib/monkey_collection_spec.rb", "spec/lib/uploadable_spec.rb", "spec/merb_monkey_spec.rb", "spec/requests", "spec/requests/main_spec.rb", "spec/spec_helper.rb", "app/controllers", "app/controllers/application.rb", "app/controllers/main.rb", "app/helpers", "app/helpers/application_helper.rb", "app/views", "app/views/layout", "app/views/layout/merb_monkey.html.erb", "app/views/main", "app/views/main/index.html.erb", "public/javascripts", "public/javascripts/ajaxupload.js", "public/javascripts/jquery.hotkeys-0.7.9.js", "public/javascripts/jquery.hotkeys-0.7.9.min.js", "public/javascripts/jquery.js", "public/javascripts/monkey.js", "public/stylesheets", "public/stylesheets/master.css", "stubs/app", "stubs/app/controllers", "stubs/app/controllers/application.rb", "stubs/app/controllers/main.rb"]
+  s.extra_rdoc_files = [%q{README}, %q{LICENSE}, %q{TODO}]
+  s.files = [%q{LICENSE}, %q{README}, %q{Rakefile}, %q{TODO}, %q{lib/constants.rb}, %q{lib/merb_monkey}, %q{lib/merb_monkey/merbtasks.rb}, %q{lib/merb_monkey/slicetasks.rb}, %q{lib/merb_monkey/spectasks.rb}, %q{lib/merb_monkey.rb}, %q{lib/monkey_collection.rb}, %q{lib/monkey_model.rb}, %q{lib/monkey_property.rb}, %q{lib/uploadable.rb}, %q{spec/lib}, %q{spec/lib/monkey_collection_spec.rb}, %q{spec/lib/uploadable_spec.rb}, %q{spec/merb_monkey_spec.rb}, %q{spec/requests}, %q{spec/requests/main_spec.rb}, %q{spec/spec_helper.rb}, %q{app/controllers}, %q{app/controllers/application.rb}, %q{app/controllers/main.rb}, %q{app/helpers}, %q{app/helpers/application_helper.rb}, %q{app/views}, %q{app/views/layout}, %q{app/views/layout/merb_monkey.html.erb}, %q{app/views/main}, %q{app/views/main/index.html.erb}, %q{public/javascripts}, %q{public/javascripts/ajaxupload.js}, %q{public/javascripts/jquery.hotkeys-0.7.9.js}, %q{public/javascripts/jquery.hotkeys-0.7.9.min.js}, %q{public/javascripts/jquery.js}, %q{public/javascripts/monkey.js}, %q{public/stylesheets}, %q{public/stylesheets/master.css}, %q{stubs/app}, %q{stubs/app/controllers}, %q{stubs/app/controllers/application.rb}, %q{stubs/app/controllers/main.rb}]
   s.homepage = %q{http://softmodal.com/}
-  s.require_paths = ["lib"]
+  s.require_paths = [%q{lib}]
   s.rubyforge_project = %q{merb}
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.8.5}
   s.summary = %q{MerbMonkey is a jQuery-powered admin slice for DataMapper}
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<merb-slices>, [">= 1.0.15"])
       s.add_runtime_dependency(%q<merb-assets>, [">= 0"])
       s.add_runtime_dependency(%q<dm-aggregates>, [">= 0"])

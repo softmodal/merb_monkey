@@ -64,8 +64,8 @@ module MonkeyModel
   def monkey_callback(blk)
     class_eval { define_method(:identified_as, lambda { self.send(self.class.send(:identified_by)) }) }
     class_eval { define_method(:errors, lambda { 
-      return unless defined?(super)
-      hash = super
+      return unless defined?(:super)
+      hash = super()
       return hash unless @_errors
       @_errors.each_pair do |k,v|
         hash[k] = [v]
