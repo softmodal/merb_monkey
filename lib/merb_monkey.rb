@@ -222,7 +222,7 @@ if defined?(Merb::Plugins)
 
       obj = klass.get(params[:obj][:id])
       params[:obj].each_pair do |key, val|
-        obj.send(key.to_s + "=", val)
+        obj.send(key.to_s + "=", val) unless obj.send(key).to_s == val.to_s
       end
 
       dirty_attrs = {}
@@ -294,7 +294,7 @@ if defined?(Merb::Plugins)
       { :message => "You will receive an email with the results of your upload shortly." }
     end
     
-    def self.excel(controller)      
+    def self.excel(controller)
       params = controller.params
       klass = MerbMonkey.const_get(controller.params[:model])
       raise Exceptions::Unauthorized unless klass.authorized_for_read(controller)

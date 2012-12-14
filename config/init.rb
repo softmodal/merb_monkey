@@ -81,6 +81,7 @@ Merb::BootLoader.after_app_loads do
     property :id, Serial
     property :name, String
     property :alive, Boolean, :default => true
+    property :notes, Text
     has n, :books
     belongs_to :publisher, :required => false
     monkey

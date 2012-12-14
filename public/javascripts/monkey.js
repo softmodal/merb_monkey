@@ -127,26 +127,7 @@ $.fn.autocomplete = function(options) {
           if (match(self.val(), self.list[i])) {
             var even = "";
             if (i % 2 == 0) even = " class='ac_even'";
-            //str += "<"+tag_type+even+">" + self.list[i] + "</"+tag_type+">";
-                        // ADDED THIS TO HIGHLIGHT
-                        // ADDED THIS TO HIGHLIGHT
-                        // ADDED THIS TO HIGHLIGHT
-                        var _m = "";
-                        var _r = "";
-                        var _val = self.val();
-                        var j = 0;
-                        for (x=0; x<_val.length; x++) {
-                          _m += "(" + _val[x] + ")([^" + _val[x+1] + "]*)";
-                          j++;
-                          _r += "<b>$" + j;
-                          j++;
-                          _r += "</b>$" + j;
-                        };
-                        var re = new RegExp(_m, "i");
-                        str += "<"+tag_type+even+">" + self.list[i].replace(re, _r) + "</"+tag_type+">";
-                        // ADDED THIS TO HIGHLIGHT
-                        // ADDED THIS TO HIGHLIGHT
-                        // ADDED THIS TO HIGHLIGHT
+            str += "<"+tag_type+even+">" + self.list[i] + "</"+tag_type+">";
           };
         };
         if (str) {
@@ -182,14 +163,7 @@ $.fn.autocomplete = function(options) {
         //return true if no suggestion so that we can submit the form
         if (!suggestion_box.is(":visible")) return true;
         var txt = selected_entry.html();
-        //if (txt) self.val(txt);
-                    // ADDED THIS TO HIGHLIGHT
-                    // ADDED THIS TO HIGHLIGHT
-                    // ADDED THIS TO HIGHLIGHT
-                    if (txt) self.val(txt.replace(/\<\/?b\>/g, ""));
-                    // ADDED THIS TO HIGHLIGHT
-                    // ADDED THIS TO HIGHLIGHT
-                    // ADDED THIS TO HIGHLIGHT
+        if (txt) self.val(txt);
         clear_suggestion_box();
         if (k == 13) return false; //for safari
       };
@@ -602,7 +576,7 @@ $.fn.monkey = function(opts) {
           $.each(relationships, function(name, i) { rel.push(name) });
           rel = rel.join(",");
           if (rel) {
-            $.ajax({
+            setTimeout(function(){ $.ajax({
               type: "GET",
               cache: false,
               dataType: "json",
@@ -611,7 +585,8 @@ $.fn.monkey = function(opts) {
               success: function(models) {
                 monkey.autocomplete = models;
               }
-            });
+            }) }, 5);
+            
           };
           
           //set the uploader data to this model_name
@@ -629,6 +604,7 @@ $.fn.monkey = function(opts) {
             $doc.unbind(k, "ctrl+shift+a", fn);
             $doc.unbind(k, "ctrl+shift+c", fn);
             $doc.unbind(k, "ctrl+shift+e", fn);
+            $doc.unbind(k, "ctrl+shift+i", fn);
             $doc.unbind(k, "ctrl+shift+d", fn);
             if (model.authorized_for_create) {
               $doc.bind(k, "ctrl+shift+a", function() { $tbody.trigger("add"); return false });
@@ -639,10 +615,12 @@ $.fn.monkey = function(opts) {
             };
             if (model.authorized_for_update) {
               $doc.bind(k, "ctrl+shift+e", function() { $tbody.trigger("edit"); return false });
+              $doc.bind(k, "ctrl+shift+i", function() { $tbody.trigger("edit_all"); return false });
             } else {
               $doc.unbind(k, "ctrl+shift+e", fn);
+              $doc.unbind(k, "ctrl+shift+i", fn);
             };
-            if (model["delete"]) {
+            if (model.authorized_for_create) {
               $doc.bind(k, "ctrl+shift+d", function() { $tbody.trigger("delete"); return false });
             } else {
               $doc.bind(k, "ctrl+shift+d", fn);
@@ -673,6 +651,7 @@ $.fn.monkey = function(opts) {
       $(document).bind("keydown", "ctrl+shift+f", function() { $("#first").click(); return false });
       $(document).bind("keydown", "ctrl+shift+l", function() { $("#last").click(); return false });
       $(document).bind("keydown", "ctrl+shift+m", function() { $select.focus(); return false });
+      $(document).bind("keydown", "ctrl+shift+/", function() { $(".tr:last",  $tbody).trigger("select"); });
       $(document).bind("keydown", "esc", function() { $("#cancel", $form).trigger("click"); return false });
     };
   
